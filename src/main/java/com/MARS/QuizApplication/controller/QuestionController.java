@@ -1,5 +1,6 @@
 package com.MARS.QuizApplication.controller;
 
+import com.MARS.QuizApplication.models.Player;
 import com.MARS.QuizApplication.models.Question;
 import com.MARS.QuizApplication.service.QuestionService;
 import com.MARS.QuizApplication.utilities.BaseResponse;
@@ -26,7 +27,9 @@ public class QuestionController {
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<Question>> getQuestionById(@PathVariable int id){
         BaseResponse<Question> response=new BaseResponse<>();
-        response.setData(questionService.getQuestionById(id).get());
+         Question question=questionService.getQuestionById(id).get();
+         question.setAnswer(null);
+        response.setData(question);
         response.setMessage("Question with id:"+id+" fetched successfully");
         response.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(response,HttpStatus.OK);
